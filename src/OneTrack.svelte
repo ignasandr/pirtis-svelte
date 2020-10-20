@@ -1,14 +1,19 @@
 <script>
-    // import {Howl, Howler} from 'howler';
-    export let id, imgPath, active;
+    import {Howl, Howler} from 'howler';
+    export let id, imgPath, audioPath, active;
 
-    // var track = new Howl({
-    //     src: [audioPath]
-    // });
+    var track = new Howl({
+        src: [audioPath],
+        loop: true,
+        html5: true
+    });
 
-    // function playTrack() {
-    //     active ? track.stop() : track.play();
-    // }
+    $: if (active) {
+            track.play();
+        }
+        else {
+            track.stop();
+        }
 
 </script>
 

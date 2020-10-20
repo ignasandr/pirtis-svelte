@@ -1,5 +1,4 @@
 <script>
-    import {Howl, Howler} from 'howler';
     import OneTrack from './OneTrack.svelte';
 
     let tracks = [
@@ -12,31 +11,15 @@
     ]
 
     let current = 0;
-    let playing = false;
-    let currentHowl = 0;
 
-    function handleClick(id, audioPath) {
+    function handleClick(id) {
         id === current ? current = 0 : current = id;
-        if (playing) {
-            currentHowl.stop();
-            playing = false;
-        }
-        if (current > 0) {
-            var sound = new Howl({
-                src: [audioPath],
-                loop: true,
-                // html5: true
-            });
-            sound.play();
-            playing = true;
-            currentHowl = sound;
-        }
     }
 </script>
 
 <div class="tracks">
-    {#each tracks as {id, imgPath, audioPath}}
-        <OneTrack id={id} imgPath={imgPath} active={id === current} on:click={() => handleClick(id, audioPath)}/>
+    {#each tracks as track}
+        <OneTrack {...track} active={track.id === current} on:click={() => handleClick(track.id)}/>
     {/each}
 </div>
 
