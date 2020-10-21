@@ -1,19 +1,39 @@
+<script context="module">
+    let current;
+</script>
+
 <script>
-    // import {Howl, Howler} from 'howler';
-    export let id, imgPath, active;
+    export let id, imgPath, audioPath, active;
 
-    // var track = new Howl({
-    //     src: [audioPath]
-    // });
+    let audio;
+    let paused = true;
 
-    // function playTrack() {
-    //     active ? track.stop() : track.play();
-    // }
+    function stopOthers() {
+        if (current && current !== audio) current.pause();
+        current = audio;
+    }
+
+    function startPlaying() {
+        if (paused) {
+            audio.currentTime = 0;
+            audio.play();
+        }
+        else {
+            audio.pause();
+        }
+    }
 
 </script>
 
 <div id="track{id}" class="{active ? "OneTrack active" : "OneTrack"}" on:click>
-    <img src={imgPath} alt="phones"> 
+    <img src={imgPath} alt="phones" on:click={startPlaying}> 
+    <audio
+        bind:this={audio}
+        bind:paused
+        on:play={stopOthers}
+        src={audioPath}>
+        <track kind="captions">
+    </audio>
 </div>
 
 <style>
